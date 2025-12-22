@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>~/tufankoc/cv.txt</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        background-color: #050505; /* Almost pure black */
+        color: #d4d4d4; /* VS Code default text color */
+        font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+        -webkit-font-smoothing: antialiased;
+        line-height: 1.6;
+      }
+      
+      /* Terminal Selection Color */
+      ::selection {
+        background: #264f78;
+        color: white;
+      }
+
+      /* Scrollbar dark mode */
+      ::-webkit-scrollbar {
+        width: 10px;
+        background: #000;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #333;
+        border: 2px solid #000;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+      }
+      
+      .blink {
+        animation: blinker 1s linear infinite;
+      }
+      @keyframes blinker {
+        50% { opacity: 0; }
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
