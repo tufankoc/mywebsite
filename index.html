@@ -1,46 +1,75 @@
 <!DOCTYPE html>
 <html lang="tr">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>~/tufankoc/cv.txt</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-      body {
-        background-color: #050505; /* Almost pure black */
-        color: #d4d4d4; /* VS Code default text color */
-        font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
-        -webkit-font-smoothing: antialiased;
-        line-height: 1.6;
-      }
-      
-      /* Terminal Selection Color */
-      ::selection {
-        background: #264f78;
-        color: white;
-      }
 
-      /* Scrollbar dark mode */
-      ::-webkit-scrollbar {
-        width: 10px;
-        background: #000;
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>~/tufankoc/cv.txt - Tufan Koç | Data Analyst & Developer</title>
+  <meta name="description"
+    content="Tufan Koç - Data Analyst and Software Developer. Viewing CV and Portfolio in terminal style. Python, React, SQL, Logic and more." />
+  <meta name="keywords"
+    content="Tufan Koç, Data Analyst, Software Developer, CV, Portfolio, Python, React, SQL, Terminal Style" />
+  <meta name="author" content="Tufan Koç" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://tufankoc.net/" />
+  <meta property="og:title" content="~/tufankoc/cv.txt - Tufan Koç" />
+  <meta property="og:description" content="Tufan Koç - Data Analyst and Software Developer. Interactive Terminal CV." />
+  <meta property="og:image" content="https://tufankoc.net/og-image.png" />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://tufankoc.net/" />
+  <meta property="twitter:title" content="~/tufankoc/cv.txt - Tufan Koç" />
+  <meta property="twitter:description"
+    content="Tufan Koç - Data Analyst and Software Developer. Interactive Terminal CV." />
+  <meta property="twitter:image" content="https://tufankoc.net/og-image.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background-color: #050505;
+      /* Almost pure black */
+      color: #d4d4d4;
+      /* VS Code default text color */
+      font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.6;
+    }
+
+    /* Terminal Selection Color */
+    ::selection {
+      background: #264f78;
+      color: white;
+    }
+
+    /* Scrollbar dark mode */
+    ::-webkit-scrollbar {
+      width: 10px;
+      background: #000;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #333;
+      border: 2px solid #000;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+
+    .blink {
+      animation: blinker 1s linear infinite;
+    }
+
+    @keyframes blinker {
+      50% {
+        opacity: 0;
       }
-      ::-webkit-scrollbar-thumb {
-        background: #333;
-        border: 2px solid #000;
-        border-radius: 4px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #555;
-      }
-      
-      .blink {
-        animation: blinker 1s linear infinite;
-      }
-      @keyframes blinker {
-        50% { opacity: 0; }
-      }
-    </style>
+    }
+  </style>
   <script type="importmap">
 {
   "imports": {
@@ -51,10 +80,12 @@
   }
 }
 </script>
-<link rel="stylesheet" href="/index.css">
+  <link rel="stylesheet" href="/index.css">
 </head>
-  <body>
-    <div id="root"></div>
+
+<body>
+  <div id="root"></div>
   <script type="module" src="/index.tsx"></script>
 </body>
+
 </html>
