@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+/* Custom Scrollbar Styles (moved from inline HTML) */
+::selection {
+    background: #264f78;
+    color: white;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    background: #000;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #333;
+    border: 2px solid #000;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.blink {
+    animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}
