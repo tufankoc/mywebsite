@@ -1,10 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
-  Terminal, 
-  ChevronRight, 
-  Cpu, 
-  Database, 
-  Activity, 
   Briefcase, 
   GraduationCap, 
   Layers, 
@@ -12,15 +7,12 @@ import {
   Mail, 
   Linkedin, 
   Twitter, 
-  Award, 
-  Code,
+  Sun, 
+  Moon,
   TrendingUp,
   FileSpreadsheet,
   Globe,
-  Sun,
-  Moon,
-  Sparkles,
-  ArrowDown
+  FileText
 } from 'lucide-react';
 
 interface ExperienceItem {
@@ -40,24 +32,14 @@ interface EducationItem {
 
 interface SkillItem {
   name: string;
-  level: number;
-}
-
-interface SkillGroup {
-  category: string;
-  skills: SkillItem[];
+  level: string;
+  useCase: string;
 }
 
 const App: React.FC = () => {
   const [currentTime, setCurrentTime] = useState<string>("");
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(true);
-  const [activeSystemStat, setActiveSystemStat] = useState<string>("SaaS");
-  const [terminalInput, setTerminalInput] = useState<string>("");
-  const [terminalHistory, setTerminalHistory] = useState<Array<{ type: 'input' | 'output'; text: string | React.ReactNode }>>([
-    { type: 'output', text: 'Tufan Koç OS v1.2.0 - Loaded' },
-    { type: 'output', text: 'Type "help" or click shortcuts below to interact.' }
-  ]);
-  const terminalEndRef = useRef<HTMLDivElement>(null);
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(false); // Starts on classic light paper
+  const [selectedBriefing, setSelectedBriefing] = useState<'finance' | 'automation' | 'venture'>('finance');
 
   useEffect(() => {
     const updateTime = () => {
@@ -69,19 +51,15 @@ const App: React.FC = () => {
     return () => clearInterval(timer);
   }, []);
 
-  useEffect(() => {
-    terminalEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [terminalHistory]);
-
   const experiences: ExperienceItem[] = [
     {
       title: "Genel Muhasebe Uzman Yardımcısı",
       company: "American LIFE Konya",
-      dates: "Eylül 2024 - Kasım 2025 (1 yıl 3 ay)",
+      dates: "Eylül 2024 - Kasım 2025",
       location: "Konya, Türkiye",
       details: [
-        "Finansal raporlama, bütçe yönetimi ve muhasebe süreçlerinin koordinasyonu.",
-        "Python ve Excel kullanarak tekrarlayan veri girişleri ve veri mutabakat süreçlerinin otomatize edilmesi."
+        "Genel muhasebe kayıtlarının tutulması, cari hesap mutabakatları ve finansal raporlamalar.",
+        "Veri giriş ve kontrol süreçlerinin hızlandırılması amacıyla Python entegrasyonlu Excel modellerinin tasarımı."
       ],
       url: "https://www.americanlife.com.tr/"
     },
@@ -91,19 +69,19 @@ const App: React.FC = () => {
       dates: "Temmuz 2023 - Ağustos 2023",
       location: "Konya, Türkiye",
       details: [
-        "Kamu muhasebesi, bütçe takibi ve devlet gelir/gider kalemlerinin işleyişinin öğrenilmesi.",
-        "Vergi dairelerindeki denetim ve operasyonel süreçlerin incelenmesi."
+        "Devlet bütçeleme süreçleri, harcama kalemleri ve kamu muhasebe sistemlerinin yerinde incelenmesi.",
+        "Vergi dairesi denetim kuralları ve operasyonel mevzuatların takip edilmesi."
       ],
       url: "https://konya.hmb.gov.tr/"
     },
     {
       title: "VP Brand, Youth Marketing & Finance",
       company: "AIESEC Türkiye (Konya Şubesi)",
-      dates: "Ocak 2023 - Ocak 2024 (1 yıl 1 ay)",
+      dates: "Ocak 2023 - Ocak 2024",
       location: "Konya, Türkiye",
       details: [
-        "Şube bütçesinin oluşturulması, finansal planlama ve yasal uyumluluk (compliance) süreçlerinin yönetimi.",
-        "Gençlik pazarlaması stratejilerinin geliştirilmesi ve kurumsal B2B satış operasyonlarının koordinasyonu."
+        "Şube bütçesinin oluşturulması, nakit akışı kontrolü ve finansal sürdürülebilirlik planlaması.",
+        "Kurumsal B2B iş geliştirme anlaşmalarının ve pazarlama ekiplerinin yönetilmesi."
       ],
       url: "https://aiesec.org.tr/"
     },
@@ -113,8 +91,8 @@ const App: React.FC = () => {
       dates: "Eylül 2022 - Şubat 2023",
       location: "İstanbul, Türkiye",
       details: [
-        "21. yüzyıl yetkinlikleri, sürdürülebilirlik, veri okuryazarlığı ve sunum teknikleri eğitimi.",
-        "Python ile programlama temelleri ve algoritma tasarımı pratikleri."
+        "21. yüzyıl yetkinlikleri, veri analizi modelleri ve Python programlama temelleri.",
+        "Takım çalışması, sunum teknikleri ve sosyal sorumluluk proje tasarımları."
       ],
       url: "https://yetkingencler.com/"
     }
@@ -133,543 +111,336 @@ const App: React.FC = () => {
     }
   ];
 
-  const skillGroups: SkillGroup[] = [
-    {
-      category: "Programlama & Veri",
-      skills: [
-        { name: "Python (Pandas, Flask)", level: 90 },
-        { name: "SQL (PostgreSQL, SQLite)", level: 85 },
-        { name: "React.js / Web Dev", level: 75 },
-        { name: "C# / PHP", level: 60 }
-      ]
-    },
-    {
-      category: "Finans & Muhasebe",
-      skills: [
-        { name: "Genel Muhasebe", level: 85 },
-        { name: "Finansal Analiz & Raporlama", level: 90 },
-        { name: "Bütçeleme & Risk Yönetimi", level: 80 },
-        { name: "Sermaye Piyasaları", level: 75 }
-      ]
-    },
-    {
-      category: "Araçlar & Analitik",
-      skills: [
-        { name: "Microsoft Excel (Advanced)", level: 95 },
-        { name: "Tableau & Veri Görselleştirme", level: 80 },
-        { name: "Linux & Git Workflows", level: 85 }
-      ]
-    }
+  const skills: SkillItem[] = [
+    { name: "Python", level: "Gelişmiş", useCase: "Finansal Veri Analizi, API Entegrasyonları ve Cron Botları" },
+    { name: "SQL", level: "Gelişmiş", useCase: "İlişkisel Veri Sorgulama, Analitik Tablolar" },
+    { name: "Microsoft Excel", level: "Uzman", useCase: "Bütçe Planlama, Pivot Tabloları, VBA & Veri Modelleme" },
+    { name: "Genel Muhasebe", level: "Gelişmiş", useCase: "Cari Hesap Takibi, Tekdüzen Hesap Planı, Finansal Tablolar" },
+    { name: "React.js / Web Dev", level: "Orta", useCase: "Arayüz Geliştirme, SaaS Ürün Yönetimi" },
+    { name: "Tableau", level: "Orta", useCase: "İş Zekası (BI) Raporlama, Yönetici KPI Panelleri" }
   ];
 
-  const handleCommand = (cmdText: string) => {
-    const trimmed = cmdText.trim().toLowerCase();
-    if (!trimmed) return;
-
-    const newHistory = [...terminalHistory, { type: 'input' as const, text: cmdText }];
-
-    switch (trimmed) {
-      case 'clear':
-        setTerminalHistory([]);
-        setTerminalInput("");
-        return;
-      case 'help':
-        newHistory.push({
-          type: 'output',
-          text: (
-            <div className="grid grid-cols-2 gap-1 text-xs font-mono-custom">
-              <div><span className="text-cyan-400 font-bold">about</span> - Tufan kimdir?</div>
-              <div><span className="text-cyan-400 font-bold">skills</span> - Yetenek matrisi</div>
-              <div><span className="text-cyan-400 font-bold">experience</span> - Kariyer geçmişi</div>
-              <div><span className="text-cyan-400 font-bold">projects</span> - Aktif projeler & SaaS</div>
-              <div><span className="text-cyan-400 font-bold">matrix</span> - Sistem durumunu göster</div>
-              <div><span className="text-cyan-400 font-bold">clear</span> - Konsolu temizle</div>
-            </div>
-          )
-        });
-        break;
-      case 'about':
-        newHistory.push({
-          type: 'output',
-          text: "Selçuk Üni. İşletme ile İstanbul Üni. Bilgisayar Programcılığı mezuniyetini birleştiren, finansal operasyonları ve analizleri Python/SQL otomasyonlarıyla hızlandıran bir analist ve sistem mimarıdır."
-        });
-        break;
-      case 'skills':
-        newHistory.push({
-          type: 'output',
-          text: "Gelişmiş Teknolojiler: Python (Pandas/NumPy), SQL, Excel Otomasyonu, Muhasebe Raporları, Tableau Görselleştirme, Git/GitHub."
-        });
-        break;
-      case 'experience':
-        newHistory.push({
-          type: 'output',
-          text: (
-            <div className="space-y-1 text-xs font-mono-custom">
-              <div>- American LIFE Konya: Genel Muhasebe Uzman Yard. (1.2 yıl)</div>
-              <div>- Maliye Bakanlığı: Konya Defterdarlığı Stajyeri</div>
-              <div>- AIESEC Türkiye: VP Finance & Brand</div>
-            </div>
-          )
-        });
-        break;
-      case 'projects':
-        newHistory.push({
-          type: 'output',
-          text: "1. diyetisyenasistani.com (SaaS) - Kurucu | 2. Automation Lab - Finansal Süreç Robotları | 3. BIST Analyst Pipeline."
-        });
-        break;
-      case 'matrix':
-        newHistory.push({
-          type: 'output',
-          text: `SYS_STATUS: ACTIVE | ACTIVE_CRONS: 8 | DB_INTEGRITY: 100% | SAAS_HEALTH: GOOD | TIMESTAMP: ${new Date().toISOString()}`
-        });
-        break;
-      default:
-        newHistory.push({
-          type: 'output',
-          text: `Command not found: "${cmdText}". Type "help" for a list of commands.`
-        });
-    }
-
-    setTerminalHistory(newHistory);
-    setTerminalInput("");
-  };
-
   const bgStyles = isDarkMode 
-    ? "gradient-bg text-slate-100 selection:bg-purple-500/30" 
-    : "bg-slate-50 text-slate-800 selection:bg-sky-500/20";
+    ? "bg-[#0b100d] text-stone-250" 
+    : "bg-[#fbfbf9] text-stone-900";
 
-  const panelStyles = isDarkMode 
-    ? "cyber-panel" 
-    : "bg-white/80 border border-slate-200/80 shadow-sm transition-all duration-300";
+  const borderStyles = isDarkMode 
+    ? "border-stone-850" 
+    : "border-stone-200";
 
   return (
-    <div className={`min-h-screen transition-colors duration-500 relative font-sans antialiased overflow-x-hidden ${bgStyles}`}>
+    <div className={`min-h-screen transition-colors duration-300 py-6 px-4 md:px-8 font-sans ${bgStyles}`}>
       
-      {/* Top Banner / System Status */}
-      <div className={`sticky top-0 z-50 px-4 py-3 text-xs flex flex-wrap items-center justify-between font-mono-custom ${
-        isDarkMode ? "bg-slate-955/70 border-b border-purple-950/40 backdrop-blur-md" : "bg-white/90 border-b border-slate-200 backdrop-blur-md shadow-sm"
-      }`}>
-        <div className="flex items-center space-x-4">
-          <div className="flex items-center space-x-1.5">
-            <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse"></span>
-            <span className="text-cyan-400 font-semibold tracking-wider uppercase text-glow-cyan">CORE: SECURE</span>
-          </div>
-          <span className="text-slate-700">|</span>
-          <div className="hidden sm:flex items-center space-x-1.5">
-            <Activity className="h-3.5 w-3.5 text-purple-400" />
-            <span className={isDarkMode ? "text-slate-400" : "text-slate-650"}>
-              Automations: <b className="text-purple-400 text-glow-purple">12 Ready</b>
+      {/* Editorial Page Container */}
+      <div className="max-w-5xl mx-auto space-y-8">
+        
+        {/* EXECUTIVE HEADER */}
+        <header className={`border-t-4 border-b pb-6 pt-4 ${isDarkMode ? 'border-emerald-700 border-b-stone-800' : 'border-stone-900 border-b-stone-200'}`}>
+          <div className="flex justify-between items-center text-[10px] uppercase tracking-widest font-semibold text-stone-500 mb-2">
+            <span>NO. 04 / ANALYST PORTFOLIO</span>
+            <span>EDITION: KONYA - TURKEY</span>
+            <span className="flex items-center space-x-2">
+              <span>{currentTime}</span>
+              <button 
+                onClick={() => setIsDarkMode(!isDarkMode)}
+                className={`p-1 rounded transition-colors ${isDarkMode ? 'hover:bg-stone-900 text-amber-400' : 'hover:bg-stone-100 text-stone-800'}`}
+                title={isDarkMode ? "Açık Moda Geç" : "Koyu Moda Geç"}
+              >
+                {isDarkMode ? <Sun className="h-3 w-3" /> : <Moon className="h-3 w-3" />}
+              </button>
             </span>
           </div>
-        </div>
-        
-        <div className="flex items-center space-x-4">
-          <button 
-            onClick={() => setIsDarkMode(!isDarkMode)} 
-            className={`p-1.5 rounded-md border flex items-center justify-center transition-all ${
-              isDarkMode 
-                ? "border-purple-900/60 hover:bg-purple-900/20 text-amber-400" 
-                : "border-slate-200 hover:bg-slate-100 text-indigo-600"
-            }`}
-            title={isDarkMode ? "Light Mode'a geç" : "Dark Mode'a geç"}
-          >
-            {isDarkMode ? <Sun className="h-3.5 w-3.5" /> : <Moon className="h-3.5 w-3.5" />}
-          </button>
-          <span className="text-slate-700">|</span>
-          <span className={isDarkMode ? "text-slate-400" : "text-slate-650"}>SYS_TIME: <span className="font-semibold">{currentTime}</span></span>
-        </div>
-      </div>
 
-      {/* HERO SECTION - Curiosity Driven Introduction */}
-      <section className="relative min-h-[90vh] flex flex-col items-center justify-center px-4 text-center">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_50%,rgba(192,132,252,0.1),transparent_100%)] pointer-events-none" />
-        
-        <div className="max-w-4xl mx-auto space-y-6 relative float-element">
+          <div className="text-center py-4">
+            <h1 className="text-4xl md:text-6xl font-black font-serif-custom tracking-tight uppercase">
+              THE KOÇ LEDGER
+            </h1>
+            <p className="text-xs italic font-serif-custom mt-2 tracking-wide text-stone-500">
+              "Integrating Capital Markets logic with computer programming systems."
+            </p>
+          </div>
+
+          {/* Sub-header columns */}
+          <div className={`grid grid-cols-1 md:grid-cols-3 gap-4 border-t pt-3 mt-4 text-xs ${isDarkMode ? 'border-stone-850 text-stone-400' : 'border-stone-200 text-stone-600'}`}>
+            <div className="md:border-r pr-4 border-inherit">
+              <b>PROFILER:</b> Tufan Koç, Business graduate (Selçuk Uni) & Computer programmer (Istanbul Uni).
+            </div>
+            <div className="md:border-r px-0 md:px-4 border-inherit text-center md:text-left">
+              <b>SYSTEM OBJECTIVE:</b> Automating accounting operations, building data feeds, and reducing manual business workloads.
+            </div>
+            <div className="pl-0 md:pl-4">
+              <b>ENTREPRENEURSHIP:</b> Founder of diyetisyenasistani.com. Target tracks: SPK & SMMM qualifications.
+            </div>
+          </div>
+        </header>
+
+        {/* FEATURED STORY SECTION */}
+        <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
-          <div className={`inline-flex items-center space-x-2 border rounded-full px-4 py-1.5 text-xs font-mono-custom font-semibold tracking-wider uppercase ${
-            isDarkMode 
-              ? "bg-slate-950/80 border-purple-500/30 text-purple-300 shadow-[0_0_15px_rgba(192,132,252,0.1)]" 
-              : "bg-sky-50 border-sky-100 text-sky-600"
-          }`}>
-            <Sparkles className="h-3.5 w-3.5 text-cyan-400" />
-            <span>Veri, Finans ve Kod Kombinasyonu</span>
-          </div>
-
-          <h1 className="text-5xl md:text-8xl font-black tracking-tight font-orbitron bg-clip-text text-transparent bg-gradient-to-r from-white via-purple-300 to-cyan-200">
-            TUFAN KOÇ
-          </h1>
-
-          <p className={`text-lg md:text-2xl font-mono-custom max-w-2xl mx-auto leading-relaxed ${isDarkMode ? "text-slate-300 text-glow-purple" : "text-slate-700"}`}>
-            Süreçleri otomatize etmek, dağınık veriden anlam çıkarmak ve stabil finansal sistemler kurmak üzerine odaklı bir analist.
-          </p>
-
-          <div className="pt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a 
-              href="#timeline" 
-              className="px-8 py-3.5 rounded-full font-bold text-sm tracking-wider uppercase bg-gradient-to-r from-purple-500 to-cyan-500 hover:from-purple-600 hover:to-cyan-600 text-slate-950 transition-all shadow-[0_0_20px_rgba(34,211,238,0.3)] hover:scale-105"
-            >
-              Serüveni Keşfet
-            </a>
-            <a 
-              href="#console" 
-              className={`px-8 py-3.5 rounded-full font-bold text-sm tracking-wider uppercase border transition-all hover:scale-105 ${
-                isDarkMode 
-                  ? "border-purple-500/30 bg-slate-900/40 text-purple-300 hover:bg-purple-900/10" 
-                  : "border-slate-300 bg-white text-slate-700 hover:bg-slate-50"
-              }`}
-            >
-              Sistem Konsolu
-            </a>
-          </div>
-        </div>
-
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center text-slate-500 text-xs font-mono-custom gap-2 animate-bounce">
-          <span>Aşağı Kaydır</span>
-          <ArrowDown className="h-4 w-4" />
-        </div>
-      </section>
-
-      {/* CORE MATRIX INTERACTION - Stat Reveal Deck */}
-      <section className="max-w-7xl mx-auto px-4 py-16 grid grid-cols-1 md:grid-cols-3 gap-6">
-        
-        <div 
-          onClick={() => setActiveSystemStat("SaaS")}
-          className={`cursor-pointer p-6 rounded-2xl border transition-all ${panelStyles} ${
-            activeSystemStat === "SaaS" ? "border-cyan-500/50 shadow-[0_0_20px_rgba(34,211,238,0.15)]" : "opacity-80"
-          }`}
-        >
-          <div className="flex items-center justify-between mb-4">
-            <span className="text-xs font-mono-custom text-cyan-400">01 / ENTERPRISE</span>
-            <Globe className="h-5 w-5 text-cyan-400" />
-          </div>
-          <h3 className="font-bold text-lg font-orbitron text-white">SaaS Girişimi</h3>
-          <p className="text-xs text-slate-400 mt-2">Diyetisyenler için entegre iş yönetim platformu. Tıklayarak detayları terminale gönderin.</p>
-        </div>
-
-        <div 
-          onClick={() => setActiveSystemStat("Automation")}
-          className={`cursor-pointer p-6 rounded-2xl border transition-all ${panelStyles} ${
-            activeSystemStat === "Automation" ? "border-purple-500/50 shadow-[0_0_20px_rgba(192,132,252,0.15)]" : "opacity-80"
-          }`}
-        >
-          <div className="flex items-center justify-between mb-4">
-            <span className="text-xs font-mono-custom text-purple-400">02 / WORKFLOW</span>
-            <Cpu className="h-5 w-5 text-purple-400" />
-          </div>
-          <h3 className="font-bold text-lg font-orbitron text-white">Otomasyon Kütüphanesi</h3>
-          <p className="text-xs text-slate-400 mt-2">Finans ve veri toplama robotları. Excel ve Python otomasyonları.</p>
-        </div>
-
-        <div 
-          onClick={() => setActiveSystemStat("Finance")}
-          className={`cursor-pointer p-6 rounded-2xl border transition-all ${panelStyles} ${
-            activeSystemStat === "Finance" ? "border-rose-500/50 shadow-[0_0_20px_rgba(244,63,94,0.15)]" : "opacity-80"
-          }`}
-        >
-          <div className="flex items-center justify-between mb-4">
-            <span className="text-xs font-mono-custom text-rose-400">03 / ANALYTICS</span>
-            <TrendingUp className="h-5 w-5 text-rose-400" />
-          </div>
-          <h3 className="font-bold text-lg font-orbitron text-white">Finansal Raporlama</h3>
-          <p className="text-xs text-slate-400 mt-2">Borsa İstanbul ve şirket finansalları bütçe mutabakat modelleri.</p>
-        </div>
-
-      </section>
-
-      {/* CORE WORKSPACE GRID */}
-      <main className="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8 relative">
-        
-        {/* LEFT COLUMN: INTERACTIVE CONSOLE (lg:col-span-5) */}
-        <div id="console" className="lg:col-span-5 space-y-6 lg:sticky lg:top-24 h-fit">
-          <div className={`p-5 rounded-2xl border ${panelStyles}`}>
-            <h3 className="text-sm font-bold font-orbitron uppercase tracking-wider mb-4 flex items-center">
-              <Terminal className="h-4.5 w-4.5 text-cyan-400 mr-2" />
-              Sistem Terminali
-            </h3>
+          {/* Main Briefing Column (lg:col-span-8) */}
+          <div className="lg:col-span-8 space-y-8">
             
-            {/* Terminal Screen */}
-            <div className="bg-slate-950 p-4 rounded-xl border border-purple-950/30 h-[280px] overflow-y-auto font-mono-custom text-xs space-y-2 text-slate-300">
-              {terminalHistory.map((item, idx) => (
-                <div key={idx}>
-                  {item.type === 'input' ? (
-                    <div className="text-cyan-400 flex items-center">
-                      <span className="text-slate-600 mr-1.5">&gt;</span>
-                      <span>{item.text}</span>
-                    </div>
-                  ) : (
-                    <div className="text-slate-400 pl-2 border-l border-purple-500/10">{item.text}</div>
-                  )}
-                </div>
-              ))}
-              <div ref={terminalEndRef} />
-            </div>
+            {/* Lead Article */}
+            <article className="space-y-4">
+              <div className="flex items-center space-x-2 text-[11px] font-bold text-emerald-700 dark:text-emerald-500 uppercase tracking-widest">
+                <span>Featured Dossier</span>
+                <span>•</span>
+                <span>System Architecture</span>
+              </div>
+              
+              <h2 className="text-2xl md:text-3xl font-bold font-serif-custom tracking-tight text-stone-900 dark:text-white leading-tight">
+                Veri ve Finansın Kesişiminde: Bir Analistin Sistem İnşa Süreci
+              </h2>
 
-            {/* Quick Action buttons */}
-            <div className="flex flex-wrap gap-2 pt-4">
-              {['help', 'about', 'skills', 'experience', 'projects', 'matrix'].map(cmd => (
-                <button
-                  key={cmd}
-                  onClick={() => handleCommand(cmd)}
-                  className={`px-3 py-1 rounded-md text-xs font-mono-custom font-semibold transition-all border ${
-                    isDarkMode 
-                      ? "bg-slate-900 border-purple-950/40 text-purple-300 hover:bg-cyan-500 hover:text-slate-950 hover:border-cyan-500 hover:shadow-[0_0_10px_rgba(34,211,238,0.3)]" 
-                      : "bg-slate-100 border-slate-200 text-slate-700 hover:bg-slate-200"
-                  }`}
+              <p className="font-serif-custom text-base md:text-lg italic text-stone-600 dark:text-stone-300 leading-relaxed quote-indicator pl-6">
+                Finansal operasyonların ve piyasaların dinamiğini sadece izlemek yetmez; veriyi anlamlandıran ve süreçleri optimize eden sürdürülebilir sistemler kurmak gerekir.
+              </p>
+
+              <div className={`text-sm leading-relaxed space-y-4 pt-2 ${isDarkMode ? 'text-stone-300' : 'text-stone-700'}`}>
+                <p>
+                  Klasik işletme eğitimi ile edindiğim <b>sermaye piyasaları</b> vizyonunu, akademik temelini aldığım <b>Bilgisayar Programcılığı</b> disipliniyle birleştiriyorum.
+                  Python ve SQL kullanarak veri mutabakat süreçlerini, muhasebe operasyonlarını ve raporlamaları dijitalleştiriyorum.
+                </p>
+                <p>
+                  Teorik bilgiyi ticari hayata adapte etme yaklaşımımın bir parçası olarak diyetisyenlere yönelik entegre bir SaaS platformu olan <b>diyetisyenasistani.com</b> girişimini hayata geçirdim. Bu süreçte ürün yönetimi, iş modeli tasarımı ve finansal planlamayı otonom olarak yönettim.
+                </p>
+              </div>
+            </article>
+
+            {/* INTERACTIVE BRIEFINGS (Dossier Tabs) */}
+            <div className={`border p-5 rounded-lg ${isDarkMode ? 'bg-stone-900/40 border-stone-850' : 'bg-[#f4f3ef] border-stone-200'}`}>
+              <div className="flex border-b border-stone-300 dark:border-stone-850 pb-2 mb-4 space-x-4 text-xs font-bold uppercase tracking-wider">
+                <button 
+                  onClick={() => setSelectedBriefing('finance')}
+                  className={`pb-1 ${selectedBriefing === 'finance' ? 'border-b-2 border-emerald-700 text-emerald-700 dark:text-emerald-500' : 'text-stone-500'}`}
                 >
-                  {cmd}
+                  Finansal Analiz
                 </button>
-              ))}
-            </div>
-          </div>
-
-          {/* SaaS detailed preview card if SaaS active */}
-          {activeSystemStat === "SaaS" && (
-            <div className={`p-5 rounded-2xl border transition-all duration-500 ${panelStyles} border-cyan-500/20`}>
-              <div className="flex items-center space-x-2 text-cyan-400 mb-2">
-                <Globe className="h-4 w-4 animate-spin-slow" />
-                <span className="text-xs font-mono-custom font-bold uppercase tracking-wider">diyetisyenasistani.com</span>
+                <button 
+                  onClick={() => setSelectedBriefing('automation')}
+                  className={`pb-1 ${selectedBriefing === 'automation' ? 'border-b-2 border-emerald-700 text-emerald-700 dark:text-emerald-500' : 'text-stone-500'}`}
+                >
+                  Otomasyon & Veri
+                </button>
+                <button 
+                  onClick={() => setSelectedBriefing('venture')}
+                  className={`pb-1 ${selectedBriefing === 'venture' ? 'border-b-2 border-emerald-700 text-emerald-700 dark:text-emerald-500' : 'text-stone-500'}`}
+                >
+                  Girişimcilik
+                </button>
               </div>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                Diyetisyenlerin randevu, bütçe, faturalandırma ve diyet planlama gibi tüm operasyonlarını tek merkezden yönetmelerini sağlayan, kurucu rolünde olduğum bulut tabanlı yazılım girişimi.
-              </p>
-              <a 
-                href="https://diyetisyenasistani.com" 
-                target="_blank" 
-                rel="noreferrer"
-                className="mt-3 inline-flex items-center text-xs font-bold text-cyan-400 hover:underline"
-              >
-                Girişimi Ziyaret Et
-                <ExternalLink className="h-3 w-3 ml-1" />
-              </a>
+
+              {selectedBriefing === 'finance' && (
+                <div className="space-y-2 text-xs leading-relaxed">
+                  <div className="font-bold font-serif-custom text-sm text-stone-850 dark:text-white">SPK & SMMM Hedefli Finans Yönetimi</div>
+                  <p className="text-stone-600 dark:text-stone-400">
+                    Genel muhasebe uzman yardımcılığı deneyimim ve aldığım finans eğitimi doğrultusunda, şirketlerin finansal sağlığını, bütçe uyumluluğunu ve nakit akış tablolarını analiz ediyorum. Türkiye vergi mevzuatı ve raporlama standartları çerçevesinde çalışıyorum.
+                  </p>
+                </div>
+              )}
+
+              {selectedBriefing === 'automation' && (
+                <div className="space-y-2 text-xs leading-relaxed">
+                  <div className="font-bold font-serif-custom text-sm text-stone-850 dark:text-white">Python & SQL Entegrasyonlu Süreçler</div>
+                  <p className="text-stone-600 dark:text-stone-400">
+                    Manuel veri girişlerini ortadan kaldıran, departmanlar arası veri mutabakat süreçlerindeki insan hatalarını minimuma indiren Python kütüphaneleri (Pandas, Numpy) ve ilişkisel veritabanı (SQL) çözümleri inşa ediyorum.
+                  </p>
+                </div>
+              )}
+
+              {selectedBriefing === 'venture' && (
+                <div className="space-y-2 text-xs leading-relaxed">
+                  <div className="font-bold font-serif-custom text-sm text-stone-850 dark:text-white">SaaS Kurucusu: diyetisyenasistani.com</div>
+                  <p className="text-stone-600 dark:text-stone-400">
+                    Sıfırdan bir SaaS iş modelinin tasarlanması, faturalandırma ve abonelik entegrasyonlarının kurulması, müşteri geri bildirimlerine göre ürünün iterate edilmesi süreçlerini bizzat yürüttüm.
+                  </p>
+                </div>
+              )}
             </div>
-          )}
 
-          {activeSystemStat === "Automation" && (
-            <div className={`p-5 rounded-2xl border transition-all duration-500 ${panelStyles} border-purple-500/20`}>
-              <div className="flex items-center space-x-2 text-purple-400 mb-2">
-                <Cpu className="h-4 w-4" />
-                <span className="text-xs font-mono-custom font-bold uppercase tracking-wider">Automation Lab</span>
-              </div>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                Genel muhasebe süreçlerinde veri mutabakat hatasını minimize eden, fatura eşleştirme ve finansal rapor hazırlama sürelerini 10 kattan fazla kısaltan Python & SQL otomasyon kütüphaneleri.
-              </p>
-            </div>
-          )}
+            {/* EXPERIENCE DOSSIER (Timeline) */}
+            <div className="space-y-6">
+              <h3 className="text-lg font-bold font-serif-custom border-b pb-2 flex items-center"
+                  style={{ borderColor: isDarkMode ? '#1e293b' : '#e2e8f0' }}>
+                <Briefcase className="h-4.5 w-4.5 text-stone-500 mr-2.5" />
+                Dossier: Kronolojik Deneyim Takibi
+              </h3>
 
-          {activeSystemStat === "Finance" && (
-            <div className={`p-5 rounded-2xl border transition-all duration-500 ${panelStyles} border-rose-500/20`}>
-              <div className="flex items-center space-x-2 text-rose-400 mb-2">
-                <TrendingUp className="h-4 w-4" />
-                <span className="text-xs font-mono-custom font-bold uppercase tracking-wider">BIST Raporlama</span>
-              </div>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                Borsa İstanbul veri akışları üzerinden şirket mali tabloları, oranları ve nakit akış tabloları üzerinde otomatik değerleme, bütçeleme ve duyarlılık analizleri modelleri.
-              </p>
-            </div>
-          )}
-        </div>
-
-        {/* RIGHT COLUMN: SCROLL JOURNEY & PORTFOLIO TIMELINE (lg:col-span-7) */}
-        <div id="timeline" className="lg:col-span-7 space-y-12">
-          
-          {/* Timeline Section */}
-          <div className={`p-6 md:p-8 rounded-2xl border ${panelStyles}`}>
-            <h2 className="text-xl font-bold font-orbitron uppercase tracking-wider flex items-center border-b pb-4 mb-8"
-                style={{ borderColor: isDarkMode ? 'rgba(192,132,252,0.15)' : '#f1f5f9' }}>
-              <Briefcase className="h-5 w-5 text-purple-400 mr-3" />
-              Kariyer Serüveni
-            </h2>
-
-            <div className="relative border-l pl-6 space-y-10"
-                 style={{ borderColor: isDarkMode ? 'rgba(192,132,252,0.15)' : '#e2e8f0' }}>
-              {experiences.map((exp, idx) => (
-                <div key={idx} className="relative group">
-                  
-                  {/* Timeline bullet indicator */}
-                  <span className={`absolute -left-[35px] top-1.5 h-4.5 w-4.5 rounded-full border-2 transition-all flex items-center justify-center ${
-                    isDarkMode ? "bg-slate-955 border-purple-500/30" : "bg-white border-slate-200"
-                  } group-hover:border-cyan-400 group-hover:shadow-[0_0_10px_rgba(34,211,238,0.5)]`}>
-                    <span className={`h-1.5 w-1.5 rounded-full transition-colors ${
-                      isDarkMode ? "bg-purple-950" : "bg-slate-250"
-                    } group-hover:bg-cyan-400`}></span>
-                  </span>
-
-                  <div className="space-y-2">
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-                      <h3 className={`font-bold text-base md:text-lg group-hover:text-cyan-400 transition-colors ${
-                        isDarkMode ? "text-slate-100" : "text-slate-800"
-                      }`}>
+              <div className="space-y-6">
+                {experiences.map((exp, idx) => (
+                  <div key={idx} className={`pb-5 border-b last:border-b-0 ${isDarkMode ? 'border-stone-850' : 'border-stone-200'}`}>
+                    <div className="flex flex-col sm:flex-row sm:items-baseline justify-between mb-1.5">
+                      <h4 className="font-bold text-sm md:text-base text-stone-900 dark:text-white">
                         {exp.title}
-                      </h3>
-                      <span className="text-[11px] font-mono-custom text-slate-500">
-                        {exp.dates}
-                      </span>
+                      </h4>
+                      <span className="text-[11px] font-semibold text-stone-500 uppercase tracking-wider">{exp.dates}</span>
                     </div>
-
-                    <div className="text-xs font-semibold flex items-center gap-1.5">
+                    
+                    <div className="text-xs text-stone-500 mb-2 flex items-center">
                       {exp.url ? (
-                        <a 
-                          href={exp.url} 
-                          target="_blank" 
-                          rel="noreferrer" 
-                          className="hover:underline inline-flex items-center gap-0.5 text-purple-400 hover:text-cyan-400 transition-colors font-mono-custom"
-                        >
+                        <a href={exp.url} target="_blank" rel="noreferrer" className="text-emerald-700 dark:text-emerald-500 hover:underline inline-flex items-center gap-0.5 font-bold">
                           {exp.company}
-                          <ExternalLink className="h-3 w-3 opacity-70" />
+                          <ExternalLink className="h-3 w-3" />
                         </a>
                       ) : (
-                        <span className="text-purple-400 font-mono-custom">{exp.company}</span>
+                        <span className="font-bold">{exp.company}</span>
                       )}
-                      <span className="text-slate-505">{exp.location && ` • ${exp.location}`}</span>
+                      {exp.location && <span className="ml-1.5">• {exp.location}</span>}
                     </div>
 
-                    <ul className="space-y-2.5 pt-2">
+                    <ul className="space-y-1.5">
                       {exp.details.map((detail, dIdx) => (
-                        <li key={dIdx} className={`text-xs flex items-start leading-relaxed ${isDarkMode ? "text-slate-400" : "text-slate-600"}`}>
-                          <span className="text-cyan-400 mr-2 shrink-0">&gt;</span>
+                        <li key={dIdx} className="text-xs text-stone-600 dark:text-stone-400 flex items-start leading-relaxed">
+                          <span className="text-stone-400 dark:text-stone-600 mr-2">•</span>
                           <span>{detail}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
+
           </div>
 
-          {/* Skill Radar / Matrix Section */}
-          <div className={`p-6 md:p-8 rounded-2xl border ${panelStyles}`}>
-            <h2 className="text-xl font-bold font-orbitron uppercase tracking-wider flex items-center border-b pb-4 mb-8"
-                style={{ borderColor: isDarkMode ? 'rgba(192,132,252,0.15)' : '#f1f5f9' }}>
-              <Award className="h-5 w-5 text-purple-400 mr-3" />
-              Yetenek & Güç Haritası
-            </h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {skillGroups.map((group, gIdx) => (
-                <div key={gIdx} className="space-y-4">
-                  <h3 className="text-xs font-bold font-mono-custom text-slate-500 uppercase tracking-wider">
-                    {group.category}
-                  </h3>
-                  <div className="space-y-3.5">
-                    {group.skills.map((skill, sIdx) => (
-                      <div key={sIdx} className="space-y-1 group">
-                        <div className="flex justify-between text-xs transition-colors group-hover:text-cyan-400">
-                          <span className={isDarkMode ? "text-slate-300" : "text-slate-705"}>{skill.name}</span>
-                          <span className="text-[10px] font-mono-custom text-slate-500">{skill.level}%</span>
-                        </div>
-                        <div className={`h-1.5 rounded-full overflow-hidden transition-all ${isDarkMode ? "bg-slate-900" : "bg-slate-100"}`}>
-                          <div 
-                            className="h-full bg-gradient-to-r from-purple-400 to-cyan-400 rounded-full transition-all duration-500"
-                            style={{ width: `${skill.level}%` }}
-                          />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Education & Contacts (Combined bottom stack) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Sidebar / Capital & Systems Metrics (lg:col-span-4) */}
+          <div className="lg:col-span-4 space-y-6">
             
-            {/* Education panel */}
-            <div className={`p-6 rounded-2xl border ${panelStyles}`}>
-              <h3 className="text-sm font-bold font-orbitron uppercase tracking-wider mb-4 flex items-center">
-                <GraduationCap className="h-4.5 w-4.5 text-purple-400 mr-2" />
-                Eğitim
+            {/* Quick Profiles Block */}
+            <div className={`border p-6 rounded-lg ${isDarkMode ? 'bg-stone-950/40 border-stone-850' : 'bg-[#fdfdfc] border-stone-200/80 shadow-sm'}`}>
+              <h3 className="text-xs font-bold uppercase tracking-wider text-stone-500 mb-4 border-b pb-1.5 border-stone-200 dark:border-stone-850">
+                Girişimler & Yayınlar
               </h3>
-              <div className="space-y-4 text-xs">
+              
+              <div className="space-y-4">
+                
+                {/* diyetisyen asistanı */}
+                <div className="space-y-1">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold font-serif-custom text-stone-900 dark:text-white">diyetisyenasistani.com</span>
+                    <a href="https://diyetisyenasistani.com" target="_blank" rel="noreferrer" className="text-stone-400 hover:text-emerald-700 transition-colors">
+                      <Globe className="h-4 w-4" />
+                    </a>
+                  </div>
+                  <p className="text-[11px] text-stone-500 leading-normal">
+                    Diyetisyenler için müşteri yönetimi ve fatura takibi sağlayan entegre SaaS platformu.
+                  </p>
+                </div>
+
+                {/* Automation lab */}
+                <div className="space-y-1 border-t pt-3 dark:border-stone-850">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold font-serif-custom text-stone-900 dark:text-white">./Automation_Lab</span>
+                    <FileSpreadsheet className="h-4 w-4 text-stone-500" />
+                  </div>
+                  <p className="text-[11px] text-stone-500 leading-normal">
+                    Finans departmanları için geliştirilen veri mutabakat ve Excel/Python entegrasyon scriptleri.
+                  </p>
+                </div>
+
+                {/* BIST Analyst */}
+                <div className="space-y-1 border-t pt-3 dark:border-stone-850">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold font-serif-custom text-stone-900 dark:text-white">BIST / Raporlama Rüzgarı</span>
+                    <TrendingUp className="h-4 w-4 text-stone-500" />
+                  </div>
+                  <p className="text-[11px] text-stone-500 leading-normal">
+                    Borsa İstanbul verilerini çekip finansal duyarlılık analizi hazırlayan analitik veri hatları.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* TABULAR SKILLS METRIC */}
+            <div className={`border p-6 rounded-lg ${isDarkMode ? 'bg-stone-950/40 border-stone-850' : 'bg-[#fdfdfc] border-stone-200/80 shadow-sm'}`}>
+              <h3 className="text-xs font-bold uppercase tracking-wider text-stone-500 mb-4 border-b pb-1.5 border-stone-200 dark:border-stone-850">
+                Yetenek Matrisi (Tabular)
+              </h3>
+              
+              <div className="overflow-x-auto">
+                <table className="w-full text-[11px] text-left">
+                  <thead>
+                    <tr className="border-b border-stone-200 dark:border-stone-850 text-stone-500">
+                      <th className="pb-1.5 font-bold uppercase">Yetenek</th>
+                      <th className="pb-1.5 font-bold uppercase text-right">Seviye</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-stone-100 dark:divide-stone-900">
+                    {skills.map((skill, idx) => (
+                      <tr key={idx} className="hover:bg-stone-50 dark:hover:bg-stone-900/30 transition-colors">
+                        <td className="py-2">
+                          <div className="font-bold text-stone-800 dark:text-stone-300">{skill.name}</div>
+                          <div className="text-[10px] text-stone-500">{skill.useCase}</div>
+                        </td>
+                        <td className="py-2 text-right font-bold text-emerald-700 dark:text-emerald-500 uppercase">
+                          {skill.level}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* EDUCATION SIDEBAR */}
+            <div className={`border p-6 rounded-lg ${isDarkMode ? 'bg-stone-950/40 border-stone-850' : 'bg-[#fdfdfc] border-stone-200/80 shadow-sm'}`}>
+              <h3 className="text-xs font-bold uppercase tracking-wider text-stone-500 mb-4 border-b pb-1.5 border-stone-200 dark:border-stone-850">
+                Akademik Temel
+              </h3>
+              
+              <div className="space-y-3 text-xs">
                 {educations.map((edu, idx) => (
-                  <div key={idx} className={idx > 0 ? "border-t pt-3" : ""}
-                       style={{ borderColor: isDarkMode ? '#1e1b4b' : '#f1f5f9' }}>
-                    <div className={`font-semibold ${isDarkMode ? "text-slate-200" : "text-slate-700"}`}>
-                      {edu.school}
-                    </div>
-                    <div className="text-cyan-400 font-mono-custom mt-0.5">{edu.degree}</div>
-                    <div className="text-[10px] text-slate-500 font-mono-custom">{edu.dates}</div>
+                  <div key={idx} className={idx > 0 ? "border-t pt-3 dark:border-stone-850" : ""}>
+                    <div className="font-bold text-stone-900 dark:text-white font-serif-custom">{edu.school}</div>
+                    <div className="text-stone-500 mt-0.5">{edu.degree}</div>
+                    <div className="text-[10px] text-stone-500">{edu.dates}</div>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Direct Access panel */}
-            <div className={`p-6 rounded-2xl border ${panelStyles} flex flex-col justify-between`}>
-              <div>
-                <h3 className="text-sm font-bold font-orbitron uppercase tracking-wider mb-3 flex items-center">
-                  <Mail className="h-4.5 w-4.5 text-purple-400 mr-2" />
-                  Kanal Bağlantısı
-                </h3>
-                <p className="text-xs text-slate-400 leading-relaxed mb-4">
-                  Süreç otomasyonları, veri analitiği veya entegre SaaS geliştirme talepleriniz için doğrudan iletişim kurun.
-                </p>
-              </div>
-
-              <div className="flex space-x-3">
-                <a 
-                  href="mailto:hi@tufankoc.net" 
-                  className={`p-2.5 rounded-lg border flex items-center justify-center transition-all ${
-                    isDarkMode 
-                      ? "bg-slate-900 border-purple-950/40 text-slate-300 hover:text-cyan-400 hover:border-cyan-500/40 hover:shadow-[0_0_10px_rgba(34,211,238,0.2)]" 
-                      : "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100"
-                  }`}
-                  title="Mail Gönder"
-                >
-                  <Mail className="h-4 w-4" />
+            {/* DOSSIER ACCESS (Contact channels) */}
+            <div className={`border p-6 rounded-lg ${isDarkMode ? 'bg-stone-950/40 border-stone-850' : 'bg-[#fdfdfc] border-stone-200/80 shadow-sm'}`}>
+              <h3 className="text-xs font-bold uppercase tracking-wider text-stone-500 mb-3 border-b pb-1.5 border-stone-200 dark:border-stone-850">
+                Resmi İrtibat Kanalları
+              </h3>
+              
+              <div className="space-y-2.5 pt-1.5">
+                <a href="mailto:hi@tufankoc.net" className="flex items-center text-xs text-stone-600 dark:text-stone-400 hover:text-emerald-700 transition-colors font-bold">
+                  <Mail className="h-4 w-4 mr-2 text-stone-500" />
+                  hi@tufankoc.net
                 </a>
-                <a 
-                  href="https://linkedin.com/in/tufankoc" 
-                  target="_blank" 
-                  rel="noreferrer"
-                  className={`p-2.5 rounded-lg border flex items-center justify-center transition-all ${
-                    isDarkMode 
-                      ? "bg-slate-900 border-purple-955/40 text-slate-300 hover:text-cyan-400 hover:border-cyan-500/40 hover:shadow-[0_0_10px_rgba(34,211,238,0.2)]" 
-                      : "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100"
-                  }`}
-                  title="LinkedIn Profil"
-                >
-                  <Linkedin className="h-4 w-4" />
+                <a href="https://linkedin.com/in/tufankoc" target="_blank" rel="noreferrer" className="flex items-center text-xs text-stone-600 dark:text-stone-400 hover:text-emerald-700 transition-colors font-bold">
+                  <Linkedin className="h-4 w-4 mr-2 text-stone-500" />
+                  linkedin.com/in/tufankoc
                 </a>
-                <a 
-                  href="https://x.com/tufankoc00" 
-                  target="_blank" 
-                  rel="noreferrer"
-                  className={`p-2.5 rounded-lg border flex items-center justify-center transition-all ${
-                    isDarkMode 
-                      ? "bg-slate-900 border-purple-955/40 text-slate-300 hover:text-cyan-400 hover:border-cyan-500/40 hover:shadow-[0_0_10px_rgba(34,211,238,0.2)]" 
-                      : "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100"
-                  }`}
-                  title="Twitter / X"
-                >
-                  <Twitter className="h-4 w-4" />
+                <a href="https://x.com/tufankoc00" target="_blank" rel="noreferrer" className="flex items-center text-xs text-stone-600 dark:text-stone-400 hover:text-emerald-700 transition-colors font-bold">
+                  <Twitter className="h-4 w-4 mr-2 text-stone-500" />
+                  @tufankoc00
                 </a>
               </div>
             </div>
 
           </div>
 
-        </div>
+        </section>
 
-      </main>
-
-      {/* Footer */}
-      <footer className={`border-t py-8 px-4 mt-20 relative ${
-        isDarkMode ? "border-purple-950/30 bg-slate-950/70" : "border-slate-200 bg-slate-100/50"
-      }`}>
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between text-xs text-slate-500 font-mono-custom space-y-4 md:space-y-0">
-          <p className="text-center md:text-left">
+        {/* FOOTER */}
+        <footer className={`border-t pt-6 pb-12 flex flex-col md:flex-row items-center justify-between text-xs text-stone-500 ${
+          isDarkMode ? 'border-stone-850' : 'border-stone-200'
+        }`}>
+          <p>
             // Unvanlar geçici, stabil ve çalışan sistemler kalıcıdır.
           </p>
           <p className="flex items-center space-x-1">
-            <span>&copy; {new Date().getFullYear()} Tufan Koç. All rights reserved.</span>
+            <span>&copy; {new Date().getFullYear()} Tufan Koç.</span>
             <span>•</span>
-            <span className="text-cyan-400 font-semibold text-glow-cyan">EOF</span>
+            <span className="font-bold">THE LEDGER</span>
           </p>
-        </div>
-      </footer>
+        </footer>
+
+      </div>
+
     </div>
   );
 };

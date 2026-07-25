@@ -1,36 +1,36 @@
 @import "tailwindcss";
 
-/* Design Tokens & Theme Configuration */
+/* Design Tokens & Editorial Theme Configuration */
 :root {
-    --bg-dark: #05050f;
-    --card-dark: rgba(10, 10, 26, 0.7);
-    --accent-purple: #c084fc;
-    --accent-cyan: #22d3ee;
-    --accent-rose: #f43f5e;
-    --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
+    --paper-light: #fbfbf9;
+    --paper-dark: #0f1512; /* Rich dark forest charcoal */
+    --accent-emerald: #15803d; /* Classic forest green */
+    --accent-gold: #b45309; /* Warm gold */
 }
 
 /* Custom Scrollbar Styles */
 ::selection {
-    background: rgba(192, 132, 252, 0.3); /* Purple 400 with opacity */
-    color: white;
+    background: rgba(21, 128, 61, 0.15);
+    color: #15803d;
 }
 
 ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-    background: var(--bg-dark);
+    width: 6px;
+    height: 6px;
+    background: var(--paper-light);
+}
+
+.dark ::-webkit-scrollbar {
+    background: var(--paper-dark);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #1e1b4b; /* Deep indigo */
+    background: #d6d3d1; /* Stone 300 */
     border-radius: 9999px;
-    border: 2px solid var(--bg-dark);
 }
 
-::-webkit-scrollbar-thumb:hover {
-    background: #312e81;
+.dark ::-webkit-scrollbar-thumb {
+    background: #292524; /* Stone 800 */
 }
 
 /* Smooth Scrolling */
@@ -38,60 +38,27 @@ html {
     scroll-behavior: smooth;
 }
 
-/* Custom Animations */
-.blink {
-    animation: blinker 1s step-end infinite;
+/* Editorial Card & Section Panel */
+.editorial-card {
+    border-color: rgba(28, 25, 23, 0.08);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@keyframes blinker {
-    from, to { border-color: transparent }
-    50% { border-color: var(--accent-cyan) }
+.dark .editorial-card {
+    border-color: rgba(245, 245, 244, 0.08);
 }
 
-/* Innovative Gradient Animation */
-.gradient-bg {
-    background: linear-gradient(-45deg, #0f172a, #1e1b4b, #042f2e, #020617);
-    background-size: 400% 400%;
-    animation: gradientShift 15s ease infinite;
+/* Decorative Serif Blockquotes */
+.quote-indicator {
+    position: relative;
 }
-
-@keyframes gradientShift {
-    0% { background-position: 0% 50% }
-    50% { background-position: 100% 50% }
-    100% { background-position: 0% 50% }
-}
-
-/* Cyber Glassmorphism */
-.cyber-panel {
-    background: var(--card-dark);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(192, 132, 252, 0.15);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.cyber-panel:hover {
-    border-color: rgba(34, 211, 238, 0.4);
-    box-shadow: 0 0 20px rgba(34, 211, 238, 0.15), inset 0 0 10px rgba(34, 211, 238, 0.05);
-    transform: translateY(-2px);
-}
-
-/* Glowing Neon Texts */
-.text-glow-purple {
-    text-shadow: 0 0 10px rgba(192, 132, 252, 0.5);
-}
-
-.text-glow-cyan {
-    text-shadow: 0 0 10px rgba(34, 211, 238, 0.5);
-}
-
-/* Floating Elements */
-.float-element {
-    animation: float 6s ease-in-out infinite;
-}
-
-@keyframes float {
-    0% { transform: translateY(0px) }
-    50% { transform: translateY(-10px) }
-    100% { transform: translateY(0px) }
+.quote-indicator::before {
+    content: "“";
+    position: absolute;
+    left: -20px;
+    top: -10px;
+    font-family: 'Merriweather', serif;
+    font-size: 3rem;
+    opacity: 0.15;
+    color: #15803d;
 }
