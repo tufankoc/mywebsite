@@ -1,32 +1,57 @@
 @import "tailwindcss";
 
-/* Custom Scrollbar Styles (moved from inline HTML) */
+/* Custom Scrollbar Styles */
 ::selection {
-    background: #264f78;
+    background: #0284c7; /* Sky 600 */
     color: white;
 }
 
 ::-webkit-scrollbar {
-    width: 10px;
-    background: #000;
+    width: 6px;
+    height: 6px;
+    background: #030712;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #333;
-    border: 2px solid #000;
-    border-radius: 4px;
+    background: #1f2937;
+    border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #555;
+    background: #374151;
 }
 
 .blink {
-    animation: blinker 1s linear infinite;
+    animation: blinker 1s step-end infinite;
 }
 
 @keyframes blinker {
-    50% {
-        opacity: 0;
-    }
+    from, to { border-color: transparent }
+    50% { border-color: #10b981 }
+}
+
+/* Custom glow utility classes */
+.glow-green {
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.15);
+}
+
+.glow-blue {
+    box-shadow: 0 0 15px rgba(14, 165, 233, 0.15);
+}
+
+.glow-border-green:hover {
+    border-color: rgba(16, 185, 129, 0.4);
+    box-shadow: 0 0 12px rgba(16, 185, 129, 0.1);
+}
+
+.glow-border-blue:hover {
+    border-color: rgba(14, 165, 233, 0.4);
+    box-shadow: 0 0 12px rgba(14, 165, 233, 0.1);
+}
+
+/* Glassmorphism dashboard backgrounds */
+.glass-panel {
+    background: rgba(17, 24, 39, 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(37, 99, 235, 0.1);
 }
