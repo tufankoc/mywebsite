@@ -1,57 +1,97 @@
 @import "tailwindcss";
 
+/* Design Tokens & Theme Configuration */
+:root {
+    --bg-dark: #05050f;
+    --card-dark: rgba(10, 10, 26, 0.7);
+    --accent-purple: #c084fc;
+    --accent-cyan: #22d3ee;
+    --accent-rose: #f43f5e;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+}
+
 /* Custom Scrollbar Styles */
 ::selection {
-    background: #0284c7; /* Sky 600 */
+    background: rgba(192, 132, 252, 0.3); /* Purple 400 with opacity */
     color: white;
 }
 
 ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-    background: #030712;
+    width: 8px;
+    height: 8px;
+    background: var(--bg-dark);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #1f2937;
+    background: #1e1b4b; /* Deep indigo */
     border-radius: 9999px;
+    border: 2px solid var(--bg-dark);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #374151;
+    background: #312e81;
 }
 
+/* Smooth Scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Custom Animations */
 .blink {
     animation: blinker 1s step-end infinite;
 }
 
 @keyframes blinker {
     from, to { border-color: transparent }
-    50% { border-color: #10b981 }
+    50% { border-color: var(--accent-cyan) }
 }
 
-/* Custom glow utility classes */
-.glow-green {
-    box-shadow: 0 0 15px rgba(16, 185, 129, 0.15);
+/* Innovative Gradient Animation */
+.gradient-bg {
+    background: linear-gradient(-45deg, #0f172a, #1e1b4b, #042f2e, #020617);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
 }
 
-.glow-blue {
-    box-shadow: 0 0 15px rgba(14, 165, 233, 0.15);
+@keyframes gradientShift {
+    0% { background-position: 0% 50% }
+    50% { background-position: 100% 50% }
+    100% { background-position: 0% 50% }
 }
 
-.glow-border-green:hover {
-    border-color: rgba(16, 185, 129, 0.4);
-    box-shadow: 0 0 12px rgba(16, 185, 129, 0.1);
+/* Cyber Glassmorphism */
+.cyber-panel {
+    background: var(--card-dark);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(192, 132, 252, 0.15);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.glow-border-blue:hover {
-    border-color: rgba(14, 165, 233, 0.4);
-    box-shadow: 0 0 12px rgba(14, 165, 233, 0.1);
+.cyber-panel:hover {
+    border-color: rgba(34, 211, 238, 0.4);
+    box-shadow: 0 0 20px rgba(34, 211, 238, 0.15), inset 0 0 10px rgba(34, 211, 238, 0.05);
+    transform: translateY(-2px);
 }
 
-/* Glassmorphism dashboard backgrounds */
-.glass-panel {
-    background: rgba(17, 24, 39, 0.7);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(37, 99, 235, 0.1);
+/* Glowing Neon Texts */
+.text-glow-purple {
+    text-shadow: 0 0 10px rgba(192, 132, 252, 0.5);
+}
+
+.text-glow-cyan {
+    text-shadow: 0 0 10px rgba(34, 211, 238, 0.5);
+}
+
+/* Floating Elements */
+.float-element {
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px) }
+    50% { transform: translateY(-10px) }
+    100% { transform: translateY(0px) }
 }
